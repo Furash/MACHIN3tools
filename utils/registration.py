@@ -422,10 +422,6 @@ def get_tools():
     # CUSTOMIZE
     classlists, keylists, count = get_customize(classlists, keylists, count)
 
-    # P4 Python
-    classlists, keylists, count = get_p4python(classlists, keylists, count)
-
-
     return classlists, keylists, count
 
 
@@ -784,10 +780,3 @@ def get_tools_pie(classlists=[], keylists=[], count=0):
         count += 1
 
     return classlists, keylists, count
-
-def get_p4python(classlists=[], keylists=[], count=0):
-    classlists.append(classesdict["P4PYTHON"])
-    count += 1
-
-    return classlists, keylists, count
-

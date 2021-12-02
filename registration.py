@@ -145,7 +145,6 @@ classes = {'CORE': [('ui.UILists', [('AppendMatsUIList', '')]),
            'TOOLS_PIE': [('ui.pies', [('PieTools', 'tools_pie')]),
                          ('ui.operators.tool', [('SetToolByName', 'set_tool_by_name'),
                                                 ('SetBCPreset', 'set_boxcutter_preset')])],
-           'P4PYTHON': [('operators.p4python', [('Install_P4Python', 'install_p4python')])],
            }
 
 

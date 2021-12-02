@@ -44,44 +44,16 @@ class Save(bpy.types.Operator):
             return f"Save {currentblend}"
         return "Save unsaved file as..."
 
-    def p4_checkout(self, context):
-        # https://www.perforce.com/manuals/p4python/Content/P4Python/python.programming.html#Programming_with_P4Python
-
-        from P4 import P4, P4Exception              # Import the module
-        p4 = P4()                                   # Create the P4 instance
-        try:                                        # Catch exceptions with try/except
-            p4.connect()                            # Connect to the Perforce server
-            p4.run("edit", bpy.data.filepath)       # Checkout current file
-            p4.disconnect()                         # Disconnect from the server
-        except P4Exception:
-            for e in p4.errors:                     # Display errors
-                print(e)
-
-    def machin3_save_file (self, context, file):
-        bpy.ops.wm.save_mainfile()
-        t = time.time()
-        localt = time.strftime('%H:%M:%S', time.localtime(t))
-        print("%s | Saved blend: %s" % (localt, file))
-        
-
     def execute(self, context):
         currentblend = bpy.data.filepath
 
         if currentblend:
-            try:
-                self.machin3_save_file(context, currentblend)
-                self.report({'INFO'}, 'Saved "%s"' % (os.path.basename(currentblend)))
-            except RuntimeError:
-                file_mode = os.stat(currentblend).st_mode
-                if bpy.context.preferences.addons['MACHIN3tools'].preferences.use_p4_checkout and file_mode == 33060: # If P4 Python checkout is activated
-                    self.p4_checkout(context)
-                    # Attempt re-save
-                    self.machin3_save_file(context, currentblend)
-                    self.report({'INFO'}, 'Saved "%s"' % (os.path.basename(currentblend)))
-                    self.report({'INFO'}, '%s Was read-only. Checked out in P4...' % currentblend)
-                    
-                else:
-                    self.report({'ERROR'}, '%s is read-only, could not be saved!' % currentblend)
+            bpy.ops.wm.save_mainfile()
+
+            t = time.time()
+            localt = time.strftime('%H:%M:%S', time.localtime(t))
+            print("%s | Saved blend: %s" % (localt, currentblend))
+            self.report({'INFO'}, 'Saved "%s"' % (os.path.basename(currentblend)))
 
         else:
             bpy.ops.wm.save_mainfile('INVOKE_DEFAULT')
