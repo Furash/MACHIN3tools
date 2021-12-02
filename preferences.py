@@ -329,6 +329,8 @@ class MACHIN3toolsPreferences(bpy.types.AddonPreferences):
     HUD_fade_group: FloatProperty(name="Group HUD Fade Time (seconds)", default=1, min=0.1)
     HUD_fade_tools_pie: FloatProperty(name="Tools Pie HUD Fade Time (seconds)", default=0.75, min=0.1)
 
+    # P4 Python
+    use_p4_checkout: BoolProperty(name="Use P4 Checkout on read-only files", default=False)
 
     # hidden
 
@@ -861,6 +863,16 @@ class MACHIN3toolsPreferences(bpy.types.AddonPreferences):
             col = split.column()
             col.prop(self, "tools_show_quick_favorites")
             col.prop(self, "tools_show_tool_bar")
+
+         # P4Python 
+        
+        bb = b.box()
+        bb.label(text="P4 Integration")
+        column = bb.column()
+        column.prop(self, "use_p4_checkout")
+        column = bb.column()
+        column.operator("machin3.install_p4python", text="Install P4Python", icon="PREFERENCES")
+   
 
 
         # NO SETTINGS
